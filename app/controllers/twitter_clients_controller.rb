@@ -1,6 +1,6 @@
 class TwitterClientsController < ApplicationController
   def index
-    client = TwitterClient.new
+    client = SalesInformationClient.new
     @sales_info = client.sales_info
   end
 end
