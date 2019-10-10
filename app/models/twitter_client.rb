@@ -8,13 +8,8 @@ class TwitterClient
     end
   end
 
-  def timeline_members
-    list_members = @client.list_members(ENV['TWITTER_AGGREGATE_USER_NAME'], ENV['TWITTER_AGGREGATE_LIST_NAME']).each_with_object([]) do |member, arr|
-      arr << member
-    end
-  end
-
-  def sales_info(shop_list)
+  def sales_info
+    shop_list = timeline_members
     sales_info = {}
     shop_list.each do |shop|
       timeline_each_user(shop).each do |content|
@@ -27,6 +22,12 @@ class TwitterClient
       end
     end
     sales_info
+  end
+
+  def timeline_members
+    list_members = @client.list_members(ENV['TWITTER_AGGREGATE_USER_NAME'], ENV['TWITTER_AGGREGATE_LIST_NAME']).each_with_object([]) do |member, arr|
+      arr << member
+    end
   end
 
   def timeline_each_user(target)
