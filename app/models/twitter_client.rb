@@ -38,6 +38,50 @@ class TwitterClient
     end
     tweet_text
   end
+
+  def parse_sale_date(content)
+    if today?(content)
+      Date.current
+    elsif tomorrow?(content)
+      Date.current + 1.days
+    else
+      get_date_from_content_by_regexp(content) || Date.current
+    end
+  end
+
+  def today?(content)
+    today_words.each do |word|
+      if content.match(word)
+        return true
+      end
+    end
+    false
+  end
+
+  def today_words
+    [/today/i, /now/i, "本日"]
+  end
+
+  def tomorrow?(content)
+    tomorrow_words.each do |word|
+      if content.match(word)
+        return true
+      end
+    end
+    false
+  end
+
+  def tomorrow_words
+    [/tomorrow/i, "明日"]
+  end
+
+  def get_date_from_content_by_regexp(content)
+    match_data = content.match(/(\d+)\/(\d+)/) || content.match(/(\d+)月(\d+)日/)
+    if match_data
+      Date.new(Date.current.year, match_data[1].to_i, match_data[2].to_i)
+    end
+  end
+
   def search_words
     %w(発売 公開 入荷 update arrival arrivals)
   end
