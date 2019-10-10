@@ -10,18 +10,17 @@ class TwitterClient
 
   def sales_info
     shop_list = timeline_members
-    sales_info = {}
-    shop_list.each do |shop|
-      timeline_each_user(shop).each do |content|
-        search_words.each do |word|
-         if content.include?(word)
-           sales_info[shop.name] = parse_sale_date(content)
-           break
-         end
+    sales_info =
+      shop_list.each_with_object({}) do |shop, hash|
+        timeline_each_user(shop).each do |content|
+          search_words.each do |word|
+           if content.include?(word)
+             hash[shop.name] = parse_sale_date(content)
+             break
+           end
+          end
         end
       end
-    end
-    sales_info
   end
 
   private
