@@ -8,35 +8,31 @@ class TwitterClient
     end
   end
 
-  def timeline_members
-    list_members = []
-    @client.list_members(ENV['TWITTER_AGGREGATE_USER_NAME'], ENV['TWITTER_AGGREGATE_LIST_NAME']).each do |member|
-      list_members << member
-    end
-    list_members
-  end
-
-  def sales_info(shop_list)
-    sales_info = {}
-    shop_list.each do |shop|
-      timeline_each_user(shop).each do |content|
+  def sales_info
+    fetch_shop_from_list.each_with_object({}) do |shop, hash|
+      tweet_contents(shop).each do |content|
         search_words.each do |word|
          if content.include?(word)
-           sales_info[shop.name] = parse_sale_date(content)
+           hash[shop.name] = parse_sale_date(content)
            break
          end
         end
       end
     end
-    sales_info
   end
 
-  def timeline_each_user(target)
-    tweet_text = []
-    @client.user_timeline(target, opt).each do |tweet|
-      tweet_text << tweet.text
+  private
+
+  def fetch_shop_from_list
+    @client.list_members(ENV['TWITTER_AGGREGATE_USER_NAME'], ENV['TWITTER_AGGREGATE_LIST_NAME']).each_with_object([]) do |member, arr|
+      arr << member
     end
-    tweet_text
+  end
+
+  def tweet_contents(account)
+    @client.user_timeline(account, opt).each_with_object([]) do |tweet, arr|
+      arr << tweet.text
+    end
   end
 
   def parse_sale_date(content)
@@ -76,7 +72,7 @@ class TwitterClient
   end
 
   def get_date_from_content_by_regexp(content)
-    match_data = content.match(/(\d+)\/(\d+)/) || content.match(/(\d+)月(\d+)日/)
+    match_data = content.match(/(\d{1, 2})\/(\d{1, 2})/) || content.match(/(\d{1, 2})月(\d{1, 2})日/)
     if match_data
       Date.new(Date.current.year, match_data[1].to_i, match_data[2].to_i)
     end
