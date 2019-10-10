@@ -76,7 +76,7 @@ class TwitterClient
   end
 
   def get_date_from_content_by_regexp(content)
-    match_data = content.match(/(\d+)\/(\d+)/) || content.match(/(\d+)月(\d+)日/)
+    match_data = content.match(/(\d{1, 2})\/(\d{1, 2})/) || content.match(/(\d{1, 2})月(\d{1, 2})日/)
     if match_data
       Date.new(Date.current.year, match_data[1].to_i, match_data[2].to_i)
     end
