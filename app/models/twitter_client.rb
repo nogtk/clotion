@@ -13,7 +13,8 @@ class TwitterClient
       tweet_contents(shop).each do |content|
         search_words.each do |word|
          if content.include?(word)
-           hash[shop.name] = parse_sale_date(content)
+           parser = SalesDateParser.new(content)
+           hash[shop.name] = parser.sale_date_from_tweet
            break
          end
         end
@@ -32,49 +33,6 @@ class TwitterClient
   def tweet_contents(account)
     @client.user_timeline(account, opt).each_with_object([]) do |tweet, arr|
       arr << tweet.text
-    end
-  end
-
-  def parse_sale_date(content)
-    if today?(content)
-      Date.current
-    elsif tomorrow?(content)
-      Date.current + 1.days
-    else
-      get_date_from_content_by_regexp(content) || Date.current
-    end
-  end
-
-  def today?(content)
-    today_words.each do |word|
-      if content.match(word)
-        return true
-      end
-    end
-    false
-  end
-
-  def today_words
-    [/today/i, /now/i, "本日"]
-  end
-
-  def tomorrow?(content)
-    tomorrow_words.each do |word|
-      if content.match(word)
-        return true
-      end
-    end
-    false
-  end
-
-  def tomorrow_words
-    [/tomorrow/i, "明日"]
-  end
-
-  def get_date_from_content_by_regexp(content)
-    match_data = content.match(/(\d{1, 2})\/(\d{1, 2})/) || content.match(/(\d{1, 2})月(\d{1, 2})日/)
-    if match_data
-      Date.new(Date.current.year, match_data[1].to_i, match_data[2].to_i)
     end
   end
 
