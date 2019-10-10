@@ -9,10 +9,10 @@ class TwitterClient
   end
 
   def sales_info
-    shop_list = timeline_members
+    shop_list = fetch_shop_from_list
     sales_info =
       shop_list.each_with_object({}) do |shop, hash|
-        timeline_each_user(shop).each do |content|
+        tweet_contents(shop).each do |content|
           search_words.each do |word|
            if content.include?(word)
              hash[shop.name] = parse_sale_date(content)
@@ -25,14 +25,14 @@ class TwitterClient
 
   private
 
-  def timeline_members
+  def fetch_shop_from_list
     list_members = @client.list_members(ENV['TWITTER_AGGREGATE_USER_NAME'], ENV['TWITTER_AGGREGATE_LIST_NAME']).each_with_object([]) do |member, arr|
       arr << member
     end
   end
 
-  def timeline_each_user(target)
-    tweet_text = @client.user_timeline(target, opt).each_with_object([]) do |tweet, arr|
+  def tweet_contents(account)
+    tweet_text = @client.user_timeline(account, opt).each_with_object([]) do |tweet, arr|
       arr << tweet.text
     end
   end
