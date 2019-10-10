@@ -30,11 +30,9 @@ class TwitterClient
   end
 
   def timeline_each_user(target)
-    tweet_text = []
-    @client.user_timeline(target, opt).each do |tweet|
-      tweet_text << tweet.text
+    tweet_text = @client.user_timeline(target, opt).each_with_object([]) do |tweet, arr|
+      arr << tweet.text
     end
-    tweet_text
   end
 
   def parse_sale_date(content)
