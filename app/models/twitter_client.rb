@@ -14,17 +14,20 @@ class TwitterClient
     end
   end
 
-  def tweet_contents(account)
+  def tweets(account)
     @client.user_timeline(account, opt).each_with_object([]) do |tweet, arr|
-      arr << tweet.text
+      next if tweet.text.include?("RT")
+      arr << tweet
     end
   end
+
+  private
 
   def search_words
     %w(発売 公開 入荷 update arrival arrivals)
   end
 
   def opt
-    { count: 10, exclude_replies: true, retweeted: false }
+    { count: 10, exclude_replies: true }
   end
 end
