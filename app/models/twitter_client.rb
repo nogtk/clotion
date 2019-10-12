@@ -16,6 +16,7 @@ class TwitterClient
 
   def tweets(account)
     @client.user_timeline(account, opt).each_with_object([]) do |tweet, arr|
+      next if tweet.text.include?("RT")
       arr << tweet
     end
   end
