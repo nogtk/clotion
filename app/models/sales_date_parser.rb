@@ -1,15 +1,15 @@
 class SalesDateParser
-  def initialize(content)
-    @content = content
+  def initialize(tweet)
+    @tweet = tweet
   end
 
   def sale_date_from_tweet
-    if today?(@content)
+    if today?(content)
       Date.current
-    elsif tomorrow?(@content)
+    elsif tomorrow?(content)
       Date.current + 1.days
     else
-      get_date_from_content_by_regexp(@content) || Date.current
+      get_date_from_content_by_regexp(content) || Date.current
     end
   end
 
@@ -46,5 +46,9 @@ class SalesDateParser
     if match_data
       Date.new(Date.current.year, match_data[1].to_i, match_data[2].to_i)
     end
+  end
+
+  def content
+    @tweet.text
   end
 end

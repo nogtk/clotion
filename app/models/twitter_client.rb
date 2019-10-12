@@ -14,9 +14,9 @@ class TwitterClient
     end
   end
 
-  def tweet_contents(account)
+  def tweets(account)
     @client.user_timeline(account, opt).each_with_object([]) do |tweet, arr|
-      arr << tweet.text
+      arr << tweet
     end
   end
 

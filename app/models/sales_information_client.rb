@@ -5,9 +5,9 @@ class SalesInformationClient
   def sales_info
     client = TwitterClient.new
     client.fetch_shop_from_list.each_with_object({}) do |shop, hash|
-      client.tweet_contents(shop).each do |content|
-        if have_keywords?(content)
-          hash[shop.name] = extract_date(content)
+      client.tweets(shop).each do |tweet|
+        if have_keywords?(tweet.text)
+          hash[shop.name] = extract_date(tweet)
           break
         end
       end
@@ -26,7 +26,7 @@ class SalesInformationClient
     %w(発売 公開 入荷 update arrival arrivals)
   end
 
-  def extract_date(content)
-    SalesDateParser.new(content).sale_date_from_tweet
+  def extract_date(tweet)
+    SalesDateParser.new(tweet).sale_date_from_tweet
   end
 end
