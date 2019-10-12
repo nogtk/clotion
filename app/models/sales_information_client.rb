@@ -18,8 +18,9 @@ class SalesInformationClient
 
   def have_keywords?(content)
     search_keywords.each do |word|
-      content.include?(word)
+      return true if content.include?(word)
     end
+    false
   end
 
   def search_keywords
