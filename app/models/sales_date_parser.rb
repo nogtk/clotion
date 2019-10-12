@@ -5,11 +5,11 @@ class SalesDateParser
 
   def sale_date_from_tweet
     if today?(content)
-      tweet_id2tweeted_time(@tweet.id)
+      tweeted_time
     elsif tomorrow?(content)
-      tweet_id2tweeted_time(@tweet.id).tomorrow
+      tweeted_time.tomorrow
     else
-      get_date_from_content_by_regexp(content) || "取得に失敗しました"
+      get_date_from_content_by_regexp(content) || tweeted_time
     end
   end
 
@@ -56,7 +56,8 @@ class SalesDateParser
     @tweet.text
   end
 
-  def time_formatter(time)
-    time.strftime("%Y-%m-%d")
+  def tweeted_time
+    tweet_id2tweeted_time(@tweet.id)
   end
+
 end
