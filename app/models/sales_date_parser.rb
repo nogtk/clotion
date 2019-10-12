@@ -9,7 +9,7 @@ class SalesDateParser
     elsif tomorrow?(content)
       tweet_id2tweeted_time(@tweet.id).tomorrow
     else
-      get_date_from_content_by_regexp(content) || Date.current
+      get_date_from_content_by_regexp(content) || "取得に失敗しました"
     end
   end
 
