@@ -20,6 +20,8 @@ class TwitterClient
     end
   end
 
+  private
+
   def search_words
     %w(発売 公開 入荷 update arrival arrivals)
   end
