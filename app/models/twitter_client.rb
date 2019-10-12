@@ -27,6 +27,6 @@ class TwitterClient
   end
 
   def opt
-    { count: 10, exclude_replies: true, retweeted: false }
+    { count: 10, exclude_replies: true }
   end
 end

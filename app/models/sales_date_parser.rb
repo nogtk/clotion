@@ -5,9 +5,9 @@ class SalesDateParser
 
   def sale_date_from_tweet
     if today?(content)
-      Date.current
+      tweet_id2tweeted_time(@tweet.id)
     elsif tomorrow?(content)
-      Date.current + 1.days
+      tweet_id2tweeted_time(@tweet.id).tomorrow
     else
       get_date_from_content_by_regexp(content) || Date.current
     end
@@ -48,7 +48,15 @@ class SalesDateParser
     end
   end
 
+  def tweet_id2tweeted_time(id)
+    Time.at(((id.to_i >> 22) + 1288834974657) / 1000.0).to_date
+  end
+
   def content
     @tweet.text
+  end
+
+  def time_formatter(time)
+    time.strftime("%Y-%m-%d")
   end
 end
