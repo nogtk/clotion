@@ -8,4 +8,13 @@ namespace :fetch_sales_info do
       s.save!
     end
   end
+
+  desc "test sales date from each store's tweet by using Twitter API"
+  task fetch_sales_date: :environment do
+    client = SalesInformationClient.new
+    Shop.all.each do |s|
+      sold_date = client.fetch_sale_dates(s.twitter_user_id)
+      SaleInfo.new(shop_id: s.id, sold_at: sold_date).save! if sold_date
+    end
+  end
 end

@@ -14,6 +14,15 @@ class SalesInformationClient
     end
   end
 
+  def fetch_sale_dates(twitter_user_id)
+    @client.tweets(twitter_user_id).each do |tweet|
+      if have_keywords?(tweet.text)
+        return extract_date(tweet)
+      end
+    end
+    nil
+  end
+
   private
 
   def have_keywords?(content)
