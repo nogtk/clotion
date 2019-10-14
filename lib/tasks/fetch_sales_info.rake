@@ -12,6 +12,8 @@ namespace :fetch_sales_info do
 
   desc "test sales date from each store's tweet by using Twitter API"
   task fetch_sales_date: :environment do
+    SaleInfo.destroy_all
+    ActiveRecord::Base.connection.execute('ALTER SEQUENCE sale_infos_id_seq RESTART WITH 1')
     client = SalesInformationClient.new
     Shop.all.each do |s|
       sold_date = client.fetch_sale_dates(s.twitter_user_id)
