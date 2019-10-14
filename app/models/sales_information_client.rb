@@ -1,11 +1,11 @@
 class SalesInformationClient
   def initialize
+    @client = TwitterClient.new
   end
 
   def sales_info
-    client = TwitterClient.new
-    client.fetch_shop_from_list.each_with_object({}) do |shop, hash|
-      client.tweets(shop).each do |tweet|
+    @client.fetch_shop_from_list.each_with_object({}) do |shop, hash|
+      @client.tweets(shop).each do |tweet|
         if have_keywords?(tweet.text)
           hash[shop.name] = extract_date(tweet)
           break
