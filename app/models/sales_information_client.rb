@@ -3,7 +3,7 @@ class SalesInformationClient
     @client = TwitterClient.new
   end
 
-  def sales_info
+  def sales_info_for_view
     @client.fetch_shop_from_list.each_with_object({}) do |shop, hash|
       @client.tweets(shop).each do |tweet|
         if have_keywords?(tweet.text)
@@ -12,6 +12,15 @@ class SalesInformationClient
         end
       end
     end
+  end
+
+  def fetch_sale_dates(twitter_user_id)
+    @client.tweets(twitter_user_id).each do |tweet|
+      if have_keywords?(tweet.text)
+        return extract_date(tweet)
+      end
+    end
+    nil
   end
 
   private
