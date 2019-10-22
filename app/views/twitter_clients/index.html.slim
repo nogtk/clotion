@@ -14,8 +14,18 @@
                   p.uk-text-meta.uk-margin-remove-top
                     = "直近の発売日: #{info.sold_at.to_date}"
           .uk-card-body
-            = image_tag 'sample.jpeg'
+            div[uk-slideshow="ratio: 1:1"]
+              .uk-position-relative.uk-visible-toggle[tablindex=-1]
+                ul.uk-slideshow-items
+                  li
+                    img[src="#{image_url('sample.jpeg')}" uk-cover]
+                  li
+                    img[src="#{image_url('sample.jpeg')}" uk-cover]
+                a.uk-position-center-left.uk-position-small.uk-hidden-hover[uk-slidenav-previous uk-slideshow-item='previous' style="color: rgba(0, 0, 0, 0.4)"]
+                a.uk-position-center-right.uk-position-small.uk-hidden-hover[uk-slidenav-next uk-slideshow-item='next' style="color: rgba(0, 0, 0, 0.4)"]
+              ul.uk-slideshow-nav.uk-dotnav.uk-flex-center.uk-margin
           .uk-card-footer
             .uk-align-right
               = link_to info.shop.twitter_url, class: 'uk-link-heading'
                 span.uk-margin-small-right[uk-icon='twitter']
+
