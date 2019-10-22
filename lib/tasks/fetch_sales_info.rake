@@ -1,6 +1,6 @@
 namespace :fetch_sales_info do
   desc "Fetch stores to aggregate by using Twitter API"
-  task fetch_stores: :environment do
+  task stores: :environment do
     Shop.destroy_all
     ActiveRecord::Base.connection.execute('ALTER SEQUENCE shops_id_seq RESTART WITH 1')
     client = TwitterClient.new
@@ -11,7 +11,7 @@ namespace :fetch_sales_info do
   end
 
   desc "test sales date from each store's tweet by using Twitter API"
-  task fetch_sales_date: :environment do
+  task sales_date: :environment do
     SaleInfo.destroy_all
     ActiveRecord::Base.connection.execute('ALTER SEQUENCE sale_infos_id_seq RESTART WITH 1')
     client = SalesInformationClient.new

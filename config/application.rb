@@ -29,5 +29,9 @@ module Clotion
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    # enable read files under /lib when env is prod
+    config.autoload_paths += %W(#{config.root}/lib)
+    config.enable_dependency_loading = true
   end
 end
