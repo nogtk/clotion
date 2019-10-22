@@ -1,5 +1,7 @@
 {
   "name": "clotion",
   "private": true,
-  "dependencies": {}
+  "dependencies": {
+    "uikit": "^3.2.1"
+  }
 }
