@@ -1,31 +1,30 @@
-.uk-container
-  .uk-grid-match.uk-grid-small.uk-child-width-1-2[uk-grid]
-    - @sales_info.each do |info|
-      .uk-animation-toggle[tabindex=0]
-        .uk-card.uk-card-default.uk-margin-top.uk-margin-large-left.uk-margin-bottom
-          .uk-card-header
-            = link_to info.shop.url, class: 'uk-link-heading uk-link-muted'
-              .uk-grid-small.uk-flex-middle[uk-grid]
-                .uk-width-auto
-                  = image_tag info.shop.twitter_thumbnail_image_url, class: 'uk-border-circle', width: '40x40'
-                .uk-width-expand
-                  h3.uk-card-title.uk-margin-remove-bottom
-                    = info.shop.name
-                  p.uk-text-meta.uk-margin-remove-top
-                    = "直近の発売日: #{info.sold_at.to_date}"
-          .uk-card-body
-            div[uk-slideshow="ratio: 1:1"]
-              .uk-position-relative.uk-visible-toggle[tablindex=-1]
-                ul.uk-slideshow-items
-                  li
-                    img[src="#{image_url('sample.jpeg')}" uk-cover]
-                  li
-                    img[src="#{image_url('sample.jpeg')}" uk-cover]
-                a.uk-position-center-left.uk-position-small.uk-hidden-hover[uk-slidenav-previous uk-slideshow-item='previous' style="color: rgba(0, 0, 0, 0.4)"]
-                a.uk-position-center-right.uk-position-small.uk-hidden-hover[uk-slidenav-next uk-slideshow-item='next' style="color: rgba(0, 0, 0, 0.4)"]
-              ul.uk-slideshow-nav.uk-dotnav.uk-flex-center.uk-margin
-          .uk-card-footer
-            .uk-align-right
-              = link_to info.shop.twitter_url, class: 'uk-link-heading'
-                span.uk-margin-small-right[uk-icon='twitter']
+.uk-grid-match.uk-grid-small.uk-child-width-1-3[uk-grid]
+  - @sales_info.each do |info|
+    .uk-animation-toggle
+      .uk-card.uk-card-default
+        .uk-card-header
+          = link_to info.shop.url, class: 'uk-link-heading uk-link-muted'
+            .uk-grid-small.uk-flex-middle[uk-grid]
+              .uk-width-auto
+                = image_tag info.shop.twitter_thumbnail_image_url, class: 'uk-border-circle', width: '40x40'
+              .uk-width-expand
+                h3.uk-card-title.uk-margin-remove-bottom
+                  = info.shop.name
+                p.uk-text-meta.uk-margin-remove-top
+                  = "直近の発売日: #{info.sold_at.to_date}"
+        .uk-card-body
+          div[uk-slideshow="ratio: 1:1"]
+            .uk-position-relative.uk-visible-toggle[tablindex=-1]
+              ul.uk-slideshow-items
+                li
+                  img[src="#{image_url('sample.jpeg')}" uk-cover]
+                li
+                  img[src="#{image_url('sample.jpeg')}" uk-cover]
+              a.uk-position-center-left.uk-position-small.uk-hidden-hover[uk-slidenav-previous uk-slideshow-item='previous' style="color: rgba(0, 0, 0, 0.4)"]
+              a.uk-position-center-right.uk-position-small.uk-hidden-hover[uk-slidenav-next uk-slideshow-item='next' style="color: rgba(0, 0, 0, 0.4)"]
+            ul.uk-slideshow-nav.uk-dotnav.uk-flex-center.uk-margin
+        .uk-card-footer
+          .uk-align-right
+            = link_to info.shop.twitter_url, class: 'uk-link-heading'
+              span.uk-margin-small-right[uk-icon='twitter']
 
