@@ -28,8 +28,9 @@ namespace :fetch_sales_info do
     client = SalesInformationClient.new
     Shop.all.each do |s|
       images = client.fetch_images(s.twitter_user_id)
-      images.each do |i|
-        Image.new(shop_id: s.id, image_url: i).save!
+      images.each_with_index do |image, i|
+        break if i == 20
+        Image.new(shop_id: s.id, image_url: image).save!
       end
     end
   end
