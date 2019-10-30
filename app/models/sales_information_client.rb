@@ -16,11 +16,19 @@ class SalesInformationClient
 
   def fetch_sale_dates(twitter_user_id)
     @client.tweets(twitter_user_id).each do |tweet|
-      if have_keywords?(tweet.text)
+      if have_keywords?(tweet.to_h[:full_text])
         return extract_date(tweet)
       end
     end
     nil
+  end
+
+  def fetch_images(twitter_user_id)
+    @client.tweets(twitter_user_id).each_with_object([]) do |tweet, arr|
+      tweet.media.each do |t|
+        arr << t.media_url_https.to_s
+      end
+    end
   end
 
   private
