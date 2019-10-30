@@ -28,6 +28,6 @@ class TwitterClient
   end
 
   def opt
-    { count: 10, exclude_replies: true }
+    { count: 10, exclude_replies: true, tweet_mode: 'extended' }
   end
 end
