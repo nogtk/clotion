@@ -16,10 +16,10 @@
           div[uk-slideshow="ratio: 1:1"]
             .uk-position-relative.uk-visible-toggle[tablindex=-1]
               ul.uk-slideshow-items
-                li
-                  img[src="#{image_url('sample.jpeg')}" uk-cover]
-                li
-                  img[src="#{image_url('sample.jpeg')}" uk-cover]
+                - info.shop.images.each do |image|
+                  li
+                    / img[src="#{image_url('sample.jpeg')}" uk-cover]
+                    = image_tag image.image_url
               a.uk-position-center-left.uk-position-small.uk-hidden-hover[uk-slidenav-previous uk-slideshow-item='previous' style="color: rgba(0, 0, 0, 0.4)"]
               a.uk-position-center-right.uk-position-small.uk-hidden-hover[uk-slidenav-next uk-slideshow-item='next' style="color: rgba(0, 0, 0, 0.4)"]
             ul.uk-slideshow-nav.uk-dotnav.uk-flex-center.uk-margin
