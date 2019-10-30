@@ -23,6 +23,14 @@ class SalesInformationClient
     nil
   end
 
+  def fetch_images(twitter_user_id)
+    @client.tweets(twitter_user_id).each_with_object([]) do |tweet, arr|
+      tweet.media.each do |t|
+        arr << t.media_url_https.to_s
+      end
+    end
+  end
+
   private
 
   def have_keywords?(content)

@@ -20,4 +20,17 @@ namespace :fetch_sales_info do
       SaleInfo.new(shop_id: s.id, sold_at: sold_date).save! if sold_date
     end
   end
+
+  desc "Fetch clothes images from each store's tweet by using Twitter API"
+  task images: :environment do
+    Image.destroy_all
+    ActiveRecord::Base.connection.execute('ALTER SEQUENCE images_id_seq RESTART WITH 1')
+    client = SalesInformationClient.new
+    Shop.all.each do |s|
+      images = client.fetch_images(s.twitter_user_id)
+      images.each do |i|
+        Image.new(shop_id: s.id, image_url: i).save!
+      end
+    end
+  end
 end
