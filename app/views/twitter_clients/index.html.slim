@@ -10,7 +10,7 @@
               .uk-width-expand
                 h3.uk-card-title.uk-margin-remove-bottom
                   = info.shop.name
-                p.uk-text-meta.uk-margin-remove-top
+                p.uk-text-meta.uk-margin-remove-top.uk-text-success
                   = "直近の発売日: #{info.sold_at.to_date}"
         .uk-card-body
           div[uk-slideshow="ratio: 1:1"]
@@ -18,11 +18,10 @@
               ul.uk-slideshow-items
                 - info.shop.images.each do |image|
                   li
-                    / img[src="#{image_url('sample.jpeg')}" uk-cover]
                     = image_tag image.image_url
-              a.uk-position-center-left.uk-position-small.uk-hidden-hover[uk-slidenav-previous uk-slideshow-item='previous' style="color: rgba(0, 0, 0, 0.4)"]
-              a.uk-position-center-right.uk-position-small.uk-hidden-hover[uk-slidenav-next uk-slideshow-item='next' style="color: rgba(0, 0, 0, 0.4)"]
-            ul.uk-slideshow-nav.uk-dotnav.uk-flex-center.uk-margin
+              a.uk-position-center-left.uk-position-small.uk-hidden-hover[uk-slidenav-previous uk-slideshow-item='previous' style="color: rgba(50, 210, 150, 0.8)"]
+              a.uk-position-center-right.uk-position-small.uk-hidden-hover[uk-slidenav-next uk-slideshow-item='next' style="color: rgba(50, 210, 150, 0.8)"]
+            ul.uk-slideshow-nav.uk-flex-center.uk-margin.uk-dotnav#image-dotnav
         .uk-card-footer
           .uk-align-right
             = link_to info.shop.twitter_url, class: 'uk-link-heading'
