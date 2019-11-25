@@ -1,5 +1,5 @@
 class TwitterClientsController < ApplicationController
   def index
-    @sales_info = SaleInfo.all.includes(shop: :images)
+    @sales_info = SaleInfo.all
   end
 end
