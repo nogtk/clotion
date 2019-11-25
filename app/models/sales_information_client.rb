@@ -25,8 +25,10 @@ class SalesInformationClient
 
   def fetch_images(twitter_user_id)
     @client.tweets(twitter_user_id).each_with_object([]) do |tweet, arr|
-      tweet.media.each do |t|
-        arr << t.media_url_https.to_s
+      if tweet.media.first.nil?
+        next
+      else
+        arr << tweet.media.first.media_url_https.to_s
       end
     end
   end
