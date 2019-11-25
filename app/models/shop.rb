@@ -1,5 +1,5 @@
 class Shop < ApplicationRecord
   validates :name, presence: true
   validates :url, presence: true
-  has_many :images, dependent: :destroy
+  has_many_attached :images
 end
