@@ -1,6 +1,13 @@
+require 'open-uri'
+
 namespace :fetch_sales_info do
   desc "Fetch stores to aggregate by using Twitter API"
   task stores: :environment do
+    Shop.all.each do |s|
+      s.images.each do |i|
+        i.purge
+      end
+    end
     Shop.destroy_all
     ActiveRecord::Base.connection.execute('ALTER SEQUENCE shops_id_seq RESTART WITH 1')
     client = TwitterClient.new
@@ -23,14 +30,17 @@ namespace :fetch_sales_info do
 
   desc "Fetch clothes images from each store's tweet by using Twitter API"
   task images: :environment do
-    Image.destroy_all
-    ActiveRecord::Base.connection.execute('ALTER SEQUENCE images_id_seq RESTART WITH 1')
+    Shop.all.each do |s|
+      s.images.each do |i|
+        i.purge
+      end
+    end
     client = SalesInformationClient.new
     Shop.all.each do |s|
       images = client.fetch_images(s.twitter_user_id)
       images.each_with_index do |image, i|
-        break if i == 20
-        Image.new(shop_id: s.id, image_url: image).save!
+        io = open(image)
+        s.images.attach(io: io, filename: "#{s.id}_#{i}")
       end
     end
   end
