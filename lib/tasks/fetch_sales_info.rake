@@ -3,11 +3,7 @@ require 'open-uri'
 namespace :fetch_sales_info do
   desc "Fetch stores to aggregate by using Twitter API"
   task stores: :environment do
-    Shop.all.each do |s|
-      s.images.each do |i|
-        i.purge
-      end
-    end
+    Shop.all.each { |s| s.delete_all_images }
     Shop.destroy_all
     ActiveRecord::Base.connection.execute('ALTER SEQUENCE shops_id_seq RESTART WITH 1')
     SalesInfo::ShopFetchService.new.call
