@@ -13,11 +13,7 @@ namespace :fetch_sales_info do
   task sales_date: :environment do
     SaleInfo.destroy_all
     ActiveRecord::Base.connection.execute('ALTER SEQUENCE sale_infos_id_seq RESTART WITH 1')
-    client = SalesInformationClient.new
-    Shop.all.each do |s|
-      sold_date = client.fetch_sale_dates(s.twitter_user_id)
-      SaleInfo.new(shop_id: s.id, sold_at: sold_date).save! if sold_date
-    end
+    SalesInfo::DateFetchService.new.call
   end
 
   desc "Fetch clothes images from each store's tweet by using Twitter API"
