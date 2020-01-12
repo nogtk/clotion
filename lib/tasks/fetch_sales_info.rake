@@ -18,11 +18,7 @@ namespace :fetch_sales_info do
 
   desc "Fetch clothes images from each store's tweet by using Twitter API"
   task images: :environment do
-    Shop.all.each do |s|
-      s.images.each do |i|
-        i.purge
-      end
-    end
+    Shop.all.each { |s| s.delete_all_images }
     SalesInfo::ImagesFetchService.new.call
   end
 end
