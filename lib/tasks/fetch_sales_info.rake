@@ -10,7 +10,7 @@ namespace :fetch_sales_info do
   end
 
   desc "test sales date from each store's tweet by using Twitter API"
-  task sales_date: :environment do
+  task date: :environment do
     SaleInfo.destroy_all
     ActiveRecord::Base.connection.execute('ALTER SEQUENCE sale_infos_id_seq RESTART WITH 1')
     SalesInfo::DateFetchService.new.call
