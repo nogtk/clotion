@@ -11,7 +11,7 @@
                 h3.uk-card-title.uk-margin-remove-bottom
                   = info.shop.name
                 p.uk-text-meta.uk-margin-remove-top.uk-text-success
-                  = "直近の発売日: #{info.sold_at.to_date}"
+                  = "直近の発売日: #{info.sold_at&.to_date}"
         .uk-card-body
           div[uk-slideshow="ratio: 1:1"]
             .uk-position-relative.uk-visible-toggle[tablindex=-1]
