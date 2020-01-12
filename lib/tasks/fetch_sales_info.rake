@@ -10,11 +10,7 @@ namespace :fetch_sales_info do
     end
     Shop.destroy_all
     ActiveRecord::Base.connection.execute('ALTER SEQUENCE shops_id_seq RESTART WITH 1')
-    client = TwitterClient.new
-    client.fetch_shop_from_list.each do |shop|
-      s = Shop.new(name: shop.name, url: shop.to_h[:url], twitter_user_id: shop.id, twitter_url: shop.url.to_s, twitter_thumbnail_image_url: shop.profile_image_url_https.to_s)
-      s.save!
-    end
+    SalesInfo::ShopFetchService.new.call
   end
 
   desc "test sales date from each store's tweet by using Twitter API"
