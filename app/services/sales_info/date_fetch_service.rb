@@ -7,7 +7,7 @@ module SalesInfo
     def call
       Shop.all.each do |s|
         date = fetch_date(s.twitter_user_id)
-        SalesInfo::DateBuilder.new(date).build if date.present?
+        SalesInfo::DateBuilder.new(s, date).build if date.present?
       end
     end
 
