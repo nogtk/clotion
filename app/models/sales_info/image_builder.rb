@@ -2,7 +2,6 @@ require 'open-uri'
 
 module SalesInfo
   class ImageBuilder
-    @count = 0
     def initialize(shop, image, filename)
       @shop = shop
       @image = image
