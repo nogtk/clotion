@@ -23,13 +23,6 @@ namespace :fetch_sales_info do
         i.purge
       end
     end
-    client = SalesInformationClient.new
-    Shop.all.each do |s|
-      images = client.fetch_images(s.twitter_user_id)
-      images.each_with_index do |image, i|
-        io = open(image)
-        s.images.attach(io: io, filename: "#{s.id}_#{i}")
-      end
-    end
+    SalesInfo::ImagesFetchService.new.call
   end
 end
