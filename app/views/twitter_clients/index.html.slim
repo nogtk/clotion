@@ -18,7 +18,8 @@
               ul.uk-slideshow-items
                 - info.shop.images.each do |image|
                   li
-                    = image_tag image
+                    .uk-position-center
+                      = image_tag image.variant(resize: '360x360')
               a.uk-position-center-left.uk-position-small.uk-hidden-hover[uk-slidenav-previous uk-slideshow-item='previous' style="color: rgba(50, 210, 150, 0.8)"]
               a.uk-position-center-right.uk-position-small.uk-hidden-hover[uk-slidenav-next uk-slideshow-item='next' style="color: rgba(50, 210, 150, 0.8)"]
             ul.uk-slideshow-nav.uk-flex-center.uk-margin.uk-dotnav#image-dotnav
