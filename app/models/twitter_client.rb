@@ -23,10 +23,6 @@ class TwitterClient
 
   private
 
-  def search_words
-    %w(発売 公開 入荷 update arrival arrivals)
-  end
-
   def opt
     { count: 20, tweet_mode: 'extended' }
   end
